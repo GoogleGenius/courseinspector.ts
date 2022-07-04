@@ -11,8 +11,13 @@ firebase.initializeApp(firebaseConfig);
 // Set data to realtime database
 firebase.database().ref();
 
-function Course(props) {
-    const course = props.course;
+type CourseProps = {
+    course: any;
+    authlevel: number;
+}
+
+function Course(props: CourseProps) {
+    const course = props.course;  // needs to be re-typed
     console.log(course);
     const authlevel = props.authlevel ? props.authlevel : 0;
     const [isEditing, setIsEditing] = useState(false);
@@ -33,20 +38,21 @@ function Course(props) {
     };
 
     // Add collapse
-    function ToggleCollapse(btn) {
-        btn.classList.toggle("active");
-        const content = btn.nextElementSibling;
+    function ToggleCollapse(btn: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        btn.currentTarget.classList.toggle("active");
+        const content = btn.currentTarget.nextElementSibling! as HTMLButtonElement;  // re-eval use of ! later...
         if (content.style.maxHeight) {
-            btn.innerHTML = "See more";
-            content.style.maxHeight = null;
+            btn.currentTarget.innerHTML = "See more";
+            content.style.display = "none";
         } else {
-            btn.innerHTML = "See less";
+            btn.currentTarget.innerHTML = "See less";
             content.style.maxHeight = content.scrollHeight + "px";
         }
     }
 
-    function Edit(btn) {
-        btn.target.classList.toggle("hide");
+    function Edit(btn: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+        // btn.classList.toggle("hide");
+        btn.currentTarget.classList.toggle("hide");
         setIsEditing(true);
     }
 
@@ -56,20 +62,26 @@ function Course(props) {
 
     function Submit() {
         const newCourse = {};
+        const loopName: string = course.coursename.toLowerCase().replaceAll(" ", "-");
 
-        const loopName = course.coursename.toLowerCase().replaceAll(" ", "-");
+        // @ts-ignore
         newCourse[loopName] = {};
 
         Object.keys(course).forEach((key) => {
             try {
                 if (key === "description") {
+                    // @ts-ignore
                     newCourse[loopName][key] =
+                        // @ts-ignore
                         refs[key].current.childNodes[0].textContent;
                 } else {
+                    // @ts-ignore
                     newCourse[loopName][key] =
+                        // @ts-ignore
                         refs[key].current.childNodes[1].wholeText.trim();
                 }
             } catch (error) {
+                // @ts-ignore
                 newCourse[loopName][key] = course[key];
             }
         });
@@ -78,6 +90,7 @@ function Course(props) {
             .database()
             .ref("courses")
             .update({
+                // @ts-ignore
                 [loopName]: newCourse[loopName],
             });
 
@@ -206,7 +219,7 @@ function Course(props) {
             <br />
             <button
                 className="collapsible"
-                onClick={({ target }) => ToggleCollapse(target)}
+                onClick={(btn) => ToggleCollapse(btn)}
             >
                 See more
             </button>

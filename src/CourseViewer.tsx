@@ -1,8 +1,13 @@
 import React, { useRef } from "react";
-import Course from "./Course.js";
+import Course from "./Course";
 import IonIcon from "@reacticons/ionicons";
 
-function CourseViewer(props: { coursedata: any; authlevel: number }) {
+type CourseViewerProps = {
+    authlevel: number;
+    coursedata: any;
+};
+
+function CourseViewer(props: CourseViewerProps) {
     const tagRefs = {
         MAT: useRef(null),
         ENG: useRef(null),
@@ -14,23 +19,34 @@ function CourseViewer(props: { coursedata: any; authlevel: number }) {
         MUS: useRef(null),
     };
 
+    type TagTypes =
+        | "MAT"
+        | "ENG"
+        | "SOC"
+        | "SCI"
+        | "BUS"
+        | "ART"
+        | "IND"
+        | "MUS";
+
     // Ideally refactor literal types to enum later...
-    function tagToggle(
-        id: "MAT" | "ENG" | "SOC" | "SCI" | "BUS" | "ART" | "IND" | "MUS"
-    ) {
-        const tagButton = tagRefs[id].current;
+    function tagToggle(id: TagTypes) {
+        const tagButton = tagRefs[id].current;  // I have no idea what I'm doing
+        // @ts-ignore
         if (tagButton.classList.contains("tag-true")) {
+            // @ts-ignore
             tagButton.classList.remove("tag-true");
         } else {
+            // @ts-ignore
             tagButton.classList.add("tag-true");
         }
     }
 
-    //Load classes
+    // Load classes
     const coursedata = Array.from(Object.keys(props.coursedata));
     console.table(props.coursedata);
     const courseItems = Object.keys(coursedata).map((name) => (
-        <Course authlevel={props.authlevel} course={coursedata[name]} />
+        <Course authlevel={props.authlevel} course={coursedata[name as unknown as number]} />
     ));
 
     return (
@@ -41,7 +57,10 @@ function CourseViewer(props: { coursedata: any; authlevel: number }) {
                     className="tag"
                     onClick={() => tagToggle("MAT")}
                 >
-                    <IonIcon className="hide" name="checkmark-outline"></IonIcon>
+                    <IonIcon
+                        className="hide"
+                        name="checkmark-outline"
+                    ></IonIcon>
                     Math
                 </button>
                 <button
@@ -49,7 +68,10 @@ function CourseViewer(props: { coursedata: any; authlevel: number }) {
                     className="tag"
                     onClick={() => tagToggle("ENG")}
                 >
-                    <IonIcon className="hide" name="checkmark-outline"></IonIcon>
+                    <IonIcon
+                        className="hide"
+                        name="checkmark-outline"
+                    ></IonIcon>
                     English
                 </button>
                 <button
@@ -57,7 +79,10 @@ function CourseViewer(props: { coursedata: any; authlevel: number }) {
                     className="tag"
                     onClick={() => tagToggle("SOC")}
                 >
-                    <IonIcon className="hide" name="checkmark-outline"></IonIcon>
+                    <IonIcon
+                        className="hide"
+                        name="checkmark-outline"
+                    ></IonIcon>
                     History
                 </button>
                 <button
@@ -65,7 +90,10 @@ function CourseViewer(props: { coursedata: any; authlevel: number }) {
                     className="tag"
                     onClick={() => tagToggle("SCI")}
                 >
-                    <IonIcon className="hide" name="checkmark-outline"></IonIcon>
+                    <IonIcon
+                        className="hide"
+                        name="checkmark-outline"
+                    ></IonIcon>
                     Science
                 </button>
                 <button
@@ -73,7 +101,10 @@ function CourseViewer(props: { coursedata: any; authlevel: number }) {
                     className="tag"
                     onClick={() => tagToggle("BUS")}
                 >
-                    <IonIcon className="hide" name="checkmark-outline"></IonIcon>
+                    <IonIcon
+                        className="hide"
+                        name="checkmark-outline"
+                    ></IonIcon>
                     Business
                 </button>
                 <button
@@ -81,7 +112,10 @@ function CourseViewer(props: { coursedata: any; authlevel: number }) {
                     className="tag"
                     onClick={() => tagToggle("ART")}
                 >
-                    <IonIcon className="hide" name="checkmark-outline"></IonIcon>
+                    <IonIcon
+                        className="hide"
+                        name="checkmark-outline"
+                    ></IonIcon>
                     Art
                 </button>
                 <button
@@ -89,7 +123,10 @@ function CourseViewer(props: { coursedata: any; authlevel: number }) {
                     className="tag"
                     onClick={() => tagToggle("IND")}
                 >
-                    <IonIcon className="hide" name="checkmark-outline"></IonIcon>
+                    <IonIcon
+                        className="hide"
+                        name="checkmark-outline"
+                    ></IonIcon>
                     Trade
                 </button>
                 <button
@@ -97,7 +134,10 @@ function CourseViewer(props: { coursedata: any; authlevel: number }) {
                     className="tag"
                     onClick={() => tagToggle("MUS")}
                 >
-                    <IonIcon className="hide" name="checkmark-outline"></IonIcon>
+                    <IonIcon
+                        className="hide"
+                        name="checkmark-outline"
+                    ></IonIcon>
                     Music
                 </button>
             </div>

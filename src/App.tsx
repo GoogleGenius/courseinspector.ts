@@ -1,17 +1,19 @@
 import React, { useRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import userdefault from "./assets/user.png";
-import CourseViewer from "./CourseViewer.js";
+import CourseViewer from "./CourseViewer";
 import "./App.css";
 import firebase from "firebase/compat/app";
 import IonIcon from "@reacticons/ionicons";
 
-function App(props: {
-    signInWithRedirect: (ref: any) => void;
-    user: firebase.User | null;
+type AppProps = {
     authlevel: number;
     coursedata: any;
-}) {
+    signInWithRedirect: () => void;  // fix this type later probably...
+    user: firebase.User | null;
+};
+
+function App(props: AppProps) {
     const signInButton = useRef(null);
     const { signInWithRedirect, user, authlevel, coursedata } = props;
 
@@ -38,7 +40,7 @@ function App(props: {
                     "--pull-width",
                     `${
                         250 -
-                        getComputedStyle(document.documentElement)
+                        (getComputedStyle(document.documentElement)
                             .getPropertyValue("--nav-width")
                             .trim()
                             .substring(
@@ -46,7 +48,7 @@ function App(props: {
                                 getComputedStyle(document.documentElement)
                                     .getPropertyValue("--nav-width")
                                     .trim().length - 2
-                            )
+                            ) as unknown as number)
                     }px`
                 );
             }
@@ -105,7 +107,7 @@ function App(props: {
                     <button
                         ref={signInButton}
                         id="signer"
-                        onClick={() => signInWithRedirect(signInButton)}
+                        onClick={() => signInWithRedirect()}
                         className="login"
                     >
                         {user ? "Sign Out" : "Login"}
@@ -115,7 +117,11 @@ function App(props: {
                         <img
                             alt="profile"
                             id="user-img"
-                            src={user ? user.photoURL : userdefault}
+                            src={
+                                user && user.photoURL
+                                    ? user.photoURL
+                                    : userdefault
+                            }
                         ></img>
                     </div>
                 </div>

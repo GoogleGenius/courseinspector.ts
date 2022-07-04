@@ -9,7 +9,7 @@ import localcoursedata from "./data/coursedata.json";
 
 let coursedata: any;
 let user: firebase.User | null = null;
-var authdata;
+let authdata: any;
 let authlevel: number = 0;
 
 const firebaseConfig = {
@@ -57,26 +57,24 @@ firebase
         dbRef
             .get()
             .then((snapshot) => {
-                if (snapshot.exists()) {
-                    authdata = snapshot.val().users;
-                    // Authorize the user if the user has been logged in
-                    if (user !== null) {
-                        try {
-                            Object.keys(authdata).forEach((key) => {
-                                if (
-                                    user!._delegate.email ===
-                                    authdata[key].email
-                                ) {
-                                    authlevel = authdata[key].level;
-                                    console.log(
-                                        `You are currently authorized with a level of ${authlevel}`
-                                    );
-                                }
-                            });
-                        } catch (error) {
-                            console.log(error);
+                if (!snapshot.exists() || user === null) {
+                    return;
+                }
+
+                // Authorize the user if the user has been logged in
+                authdata = snapshot.val().users;
+
+                try {
+                    Object.keys(authdata).forEach((key) => {
+                        if (user!.email === authdata[key].email) {
+                            authlevel = authdata[key].level;
+                            console.log(
+                                `You are currently authorized with a level of ${authlevel}`
+                            );
                         }
-                    }
+                    });
+                } catch (error) {
+                    console.log(error);
                 }
             })
             .catch((error) => console.log(error));
@@ -97,8 +95,8 @@ function RenderDom() {
     );
 }
 
-function signInWithRedirect(ref) {
-    if (user == null) {
+function signInWithRedirect() {
+    if (user === null) {
         firebase.auth().signInWithRedirect(provider);
     } else {
         firebase
