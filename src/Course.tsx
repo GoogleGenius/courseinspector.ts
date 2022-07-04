@@ -18,7 +18,7 @@ interface CourseProps {
 
 function Course(props: CourseProps): JSX.Element {
   const course = props.course; // needs to be re-typed
-  console.log(course);
+  console.log(course) // is this a string or a object...
   const authlevel = props.authlevel ? props.authlevel : 0;
   const [isEditing, setIsEditing] = useState(false);
 
@@ -216,7 +216,7 @@ function Course(props: CourseProps): JSX.Element {
         <b contentEditable="false">Considerations:</b> {course.considerations}
       </p>
       <br />
-      <button className="collapsible" onClick={(btn) => ToggleCollapse(btn)}>
+      <button className="collapsible" onClick={ToggleCollapse}>
         See more
       </button>
       <p
@@ -229,12 +229,12 @@ function Course(props: CourseProps): JSX.Element {
       </p>
       <div className="flex-container">
         {isEditing && (
-          <button onClick={() => Cancel()} className="button">
+          <button onClick={Cancel} className="button">
             Cancel
           </button>
         )}
         {isEditing && (
-          <button onClick={() => Submit()} className="button-primary">
+          <button onClick={Submit} className="button-primary">
             Submit
           </button>
         )}

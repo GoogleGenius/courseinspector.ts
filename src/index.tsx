@@ -66,10 +66,10 @@ firebase
             }
           });
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   })
   .catch((error) => console.error(error));
 
@@ -103,7 +103,7 @@ function signInWithRedirect(): void {
       })
       .catch((error) => {
         // An error happened.
-        console.log(error);
+        console.error(error);
       });
   }
 }

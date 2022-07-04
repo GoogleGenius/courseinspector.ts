@@ -92,7 +92,7 @@ function App(props: AppProps): JSX.Element {
       </div>
       <div className="main">
         <div className="topbar">
-          <div className="toggle" onClick={() => toggleNav()}>
+          <div className="toggle" onClick={toggleNav}>
             {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
             <ion-icon name="menu-outline" />
           </div>
@@ -112,7 +112,7 @@ function App(props: AppProps): JSX.Element {
           <button
             ref={signInButton}
             id="signer"
-            onClick={() => signInWithRedirect()}
+            onClick={signInWithRedirect}
             className="login"
           >
             {user != null ? 'Sign Out' : 'Login'}
@@ -138,7 +138,7 @@ function App(props: AppProps): JSX.Element {
           </Routes>
         </Router>
       </div>
-      <div onClick={() => topFunction()} id="to-top" className="jump-to-top">
+      <div onClick={topFunction} id="to-top" className="jump-to-top">
         {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
         <ion-icon name="chevron-up-outline" />
       </div>

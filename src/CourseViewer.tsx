@@ -36,7 +36,6 @@ function CourseViewer(props: CourseViewerProps): JSX.Element {
 
   // Load classes
   const coursedata = Array.from(Object.keys(props.coursedata));
-  console.table(props.coursedata);
   const courseItems = Object.keys(coursedata).map((name) => (
     // eslint-disable-next-line react/jsx-key
     <Course
