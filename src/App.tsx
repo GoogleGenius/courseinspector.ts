@@ -9,49 +9,54 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 interface AppProps {
   authlevel: number;
   coursedata: CourseData;
-  signInWithRedirect: () => void; // fix this type later probably...
+  signInWithRedirect: () => void; // TODO: Fix type
   user: firebase.User | null;
 }
 
-function App(props: AppProps): JSX.Element {
-  const signInButton = useRef(null);
-  const { signInWithRedirect, user, authlevel, coursedata } = props;
+function App({
+  authlevel,
+  coursedata,
+  signInWithRedirect,
+  user,
+}: AppProps): JSX.Element {
+  const signInButton = useRef(null); // TODO: Fix type
 
-  // When the user clicks on the button, scroll to the top of the document
-  function topFunction(): void {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  function scrollToTop(): void {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 
   function toggleNav(): void {
     if (
       getComputedStyle(document.documentElement)
         .getPropertyValue('--nav-width')
-        .trim() !== '250px'
+        .trim() === '250px'
     ) {
-      if (
-        getComputedStyle(document.documentElement)
-          .getPropertyValue('--pull-width')
-          .trim() !== '0px'
-      ) {
-        document.documentElement.style.removeProperty('--pull-width');
-      } else {
-        document.documentElement.style.setProperty(
-          '--pull-width',
-          `${
-            250 -
-            (getComputedStyle(document.documentElement)
-              .getPropertyValue('--nav-width')
-              .trim()
-              .substring(
-                0,
-                getComputedStyle(document.documentElement)
-                  .getPropertyValue('--nav-width')
-                  .trim().length - 2
-              ) as unknown as number)
-          }px`
-        );
-      }
+      return;
+    }
+
+    if (
+      getComputedStyle(document.documentElement)
+        .getPropertyValue('--pull-width')
+        .trim() !== '0px'
+    ) {
+      document.documentElement.style.removeProperty('--pull-width');
+    } else {
+      document.documentElement.style.setProperty(
+        '--pull-width',
+        `${
+          250 -
+          (getComputedStyle(document.documentElement)
+            .getPropertyValue('--nav-width')
+            .trim()
+            .substring(
+              0,
+              getComputedStyle(document.documentElement)
+                .getPropertyValue('--nav-width')
+                .trim().length - 2
+            ) as unknown as number)
+        }px`
+      );
     }
   }
 
@@ -63,7 +68,7 @@ function App(props: AppProps): JSX.Element {
             <li>
               <a href=".">
                 <span className="icon">
-                  {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+                  {/* @ts-expect-error ts(2339) */}
                   <ion-icon name="school-outline" />
                 </span>
                 <span className="title">Course Inspector</span>
@@ -72,7 +77,7 @@ function App(props: AppProps): JSX.Element {
             <li className="hovered">
               <a href=".">
                 <span className="icon">
-                  {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+                  {/* @ts-expect-error ts(2339) */}
                   <ion-icon name="search-outline" />
                 </span>
                 <span className="title">Search All</span>
@@ -81,7 +86,7 @@ function App(props: AppProps): JSX.Element {
             <li>
               <a href="https://cdn.linnmar.k12.ia.us/wp-content/uploads/2016/11/2022-2023-LMHS-Program-of-Studies-FINAL2-1.pdf">
                 <span className="icon">
-                  {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+                  {/* @ts-expect-error ts(2339) */}
                   <ion-icon name="document-text-outline" />
                 </span>
                 <span className="title">PDF</span>
@@ -93,12 +98,12 @@ function App(props: AppProps): JSX.Element {
       <div className="main">
         <div className="topbar">
           <div className="toggle" onClick={toggleNav}>
-            {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+            {/* @ts-expect-error ts(2339) */}
             <ion-icon name="menu-outline" />
           </div>
           <div className="search">
             <label htmlFor="searchbar">
-              {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+              {/* @ts-expect-error ts(2339) */}
               <ion-icon name="search-outline" />
             </label>
             <input
@@ -115,7 +120,7 @@ function App(props: AppProps): JSX.Element {
             onClick={signInWithRedirect}
             className="login"
           >
-            {user != null ? 'Sign Out' : 'Login'}
+            {user !== null ? 'Sign Out' : 'Login'}
           </button>
 
           <div className="user">
@@ -138,8 +143,8 @@ function App(props: AppProps): JSX.Element {
           </Routes>
         </Router>
       </div>
-      <div onClick={topFunction} id="to-top" className="jump-to-top">
-        {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+      <div onClick={scrollToTop} id="to-top" className="jump-to-top">
+        {/* @ts-expect-error ts(2339) */}
         <ion-icon name="chevron-up-outline" />
       </div>
     </div>

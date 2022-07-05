@@ -15,7 +15,6 @@ let user: firebase.User | null = null;
 let authdata: any;
 let authlevel = 0;
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.auth();
 
@@ -97,12 +96,9 @@ function signInWithRedirect(): void {
       .then(() => {
         user = null;
         authlevel = 0;
-        // Sign-out successful.
-        // Update DOM to match
         RenderDom();
       })
       .catch((error) => {
-        // An error happened.
         console.error(error);
       });
   }

@@ -4,10 +4,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
 import React, { useRef, useState } from 'react';
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
-// Set data to realtime database
 firebase.database().ref();
 
 interface CourseProps {
@@ -16,12 +13,12 @@ interface CourseProps {
   authlevel: number;
 }
 
-function Course(props: CourseProps): JSX.Element {
-  const course = props.course; // needs to be re-typed
-  console.log(course) // is this a string or a object...
-  const authlevel = props.authlevel ? props.authlevel : 0;
-  const [isEditing, setIsEditing] = useState(false);
+function Course({ course, authlevel }: CourseProps): JSX.Element {
+  // TODO: Fix type of course - this is apparently a string (name of the course)
+  console.log(course);
 
+  authlevel = authlevel ? authlevel : 0;
+  const [isEditing, setIsEditing] = useState(false);
   const refs = {
     credits: useRef(null),
     length: useRef(null),
@@ -37,12 +34,11 @@ function Course(props: CourseProps): JSX.Element {
     description: useRef(null),
   };
 
-  // Add collapse
   function ToggleCollapse(
     btn: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void {
     btn.currentTarget.classList.toggle('active');
-    const content = btn.currentTarget.nextElementSibling as HTMLButtonElement;
+    const content = btn.currentTarget.nextElementSibling as HTMLElement;
     if (content.style.maxHeight) {
       btn.currentTarget.innerHTML = 'See more';
       content.style.removeProperty('max-height');
@@ -53,7 +49,6 @@ function Course(props: CourseProps): JSX.Element {
   }
 
   function Edit(btn: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
-    // btn.classList.toggle("hide");
     btn.currentTarget.classList.toggle('hide');
     setIsEditing(true);
   }
@@ -104,11 +99,11 @@ function Course(props: CourseProps): JSX.Element {
   }
 
   return (
-    <div suppressContentEditableWarning className="Course">
+    <div suppressContentEditableWarning={true} className="Course">
       <h1 className="coursetitle">{course.coursename}</h1>
       <br />
       <p
-        suppressContentEditableWarning
+        suppressContentEditableWarning={true}
         contentEditable={isEditing}
         ref={refs.credits}
         className="coursedescription"
@@ -116,7 +111,7 @@ function Course(props: CourseProps): JSX.Element {
         <b contentEditable="false">Credits:</b> {course.credits}
       </p>
       <p
-        suppressContentEditableWarning
+        suppressContentEditableWarning={true}
         contentEditable={isEditing}
         ref={refs.length}
         className="coursedescription"
@@ -124,7 +119,7 @@ function Course(props: CourseProps): JSX.Element {
         <b contentEditable="false">Length:</b> {course.length}
       </p>
       <p
-        suppressContentEditableWarning
+        suppressContentEditableWarning={true}
         contentEditable={isEditing}
         ref={refs.format}
         className="coursedescription"
@@ -132,7 +127,7 @@ function Course(props: CourseProps): JSX.Element {
         <b contentEditable="false">Format:</b> {course.format}
       </p>
       <p
-        suppressContentEditableWarning
+        suppressContentEditableWarning={true}
         contentEditable={isEditing}
         ref={refs.courseid}
         className="coursedescription"
@@ -140,7 +135,7 @@ function Course(props: CourseProps): JSX.Element {
         <b contentEditable="false">Course ID:</b> {course.courseid}
       </p>
       <p
-        suppressContentEditableWarning
+        suppressContentEditableWarning={true}
         contentEditable={isEditing}
         ref={refs.gradelevels}
         className="coursedescription"
@@ -149,7 +144,7 @@ function Course(props: CourseProps): JSX.Element {
       </p>
       <br />
       <p
-        suppressContentEditableWarning
+        suppressContentEditableWarning={true}
         contentEditable={isEditing}
         ref={refs.prerequisites}
         className="coursedescription"
@@ -159,7 +154,7 @@ function Course(props: CourseProps): JSX.Element {
       <br />
       {course.fees !== null && (
         <p
-          suppressContentEditableWarning
+          suppressContentEditableWarning={true}
           contentEditable={isEditing}
           ref={refs.fees}
           className="coursedescription"
@@ -170,7 +165,7 @@ function Course(props: CourseProps): JSX.Element {
       {course.corequisite !== null && (
         <div>
           <p
-            suppressContentEditableWarning
+            suppressContentEditableWarning={true}
             contentEditable={isEditing}
             ref={refs.corequisite}
             className="coursedescription"
@@ -183,7 +178,7 @@ function Course(props: CourseProps): JSX.Element {
       {course.subsequent !== null && (
         <div>
           <p
-            suppressContentEditableWarning
+            suppressContentEditableWarning={true}
             contentEditable={isEditing}
             ref={refs.subsequent}
             className="coursedescription"
@@ -196,7 +191,7 @@ function Course(props: CourseProps): JSX.Element {
       {course.studentrecommendations !== null && (
         <div>
           <p
-            suppressContentEditableWarning
+            suppressContentEditableWarning={true}
             contentEditable={isEditing}
             ref={refs.studentrecommendations}
             className="coursedescription"
@@ -208,7 +203,7 @@ function Course(props: CourseProps): JSX.Element {
         </div>
       )}
       <p
-        suppressContentEditableWarning
+        suppressContentEditableWarning={true}
         contentEditable={isEditing}
         ref={refs.considerations}
         className="coursedescription"
@@ -220,7 +215,7 @@ function Course(props: CourseProps): JSX.Element {
         See more
       </button>
       <p
-        suppressContentEditableWarning
+        suppressContentEditableWarning={true}
         contentEditable={isEditing}
         ref={refs.description}
         className="coursedescription content-collapsible"
@@ -240,12 +235,12 @@ function Course(props: CourseProps): JSX.Element {
         )}
       </div>
       {authlevel === 5 && !isEditing && (
-        /* @ts-expect-error Ion Icons with React and TypeScript are not compatible */
+        /* @ts-expect-error ts(2339) */
         <ion-icon
           onClick={(btn: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
             Edit(btn)
           }
-          className="edit"
+          class="edit"
           name="pencil-outline"
         />
       )}

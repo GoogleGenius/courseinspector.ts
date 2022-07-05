@@ -7,7 +7,10 @@ interface CourseViewerProps {
   coursedata: CourseData;
 }
 
-function CourseViewer(props: CourseViewerProps): JSX.Element {
+function CourseViewer({
+  authlevel,
+  coursedata,
+}: CourseViewerProps): JSX.Element {
   const tagRefs = {
     MAT: useRef(null),
     ENG: useRef(null),
@@ -35,12 +38,12 @@ function CourseViewer(props: CourseViewerProps): JSX.Element {
   }
 
   // Load classes
-  const coursedata = Array.from(Object.keys(props.coursedata));
-  const courseItems = Object.keys(coursedata).map((name) => (
+  const courseDataKeys = Array.from(Object.keys(coursedata));
+  const courseItems = Object.keys(courseDataKeys).map((name) => (
     // eslint-disable-next-line react/jsx-key
     <Course
-      authlevel={props.authlevel}
-      course={coursedata[name as unknown as number]}
+      authlevel={authlevel}
+      course={courseDataKeys[name as unknown as number]}
     />
   ));
 
@@ -52,7 +55,7 @@ function CourseViewer(props: CourseViewerProps): JSX.Element {
           className="tag"
           onClick={() => tagToggle('MAT')}
         >
-          {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+          {/* @ts-expect-error ts(2339) */}
           <ion-icon class="hide" name="checkmark-outline" />
           Math
         </button>
@@ -61,7 +64,7 @@ function CourseViewer(props: CourseViewerProps): JSX.Element {
           className="tag"
           onClick={() => tagToggle('ENG')}
         >
-          {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+          {/* @ts-expect-error ts(2339) */}
           <ion-icon class="hide" name="checkmark-outline" />
           English
         </button>
@@ -70,7 +73,7 @@ function CourseViewer(props: CourseViewerProps): JSX.Element {
           className="tag"
           onClick={() => tagToggle('SOC')}
         >
-          {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+          {/* @ts-expect-error ts(2339) */}
           <ion-icon class="hide" name="checkmark-outline" />
           History
         </button>
@@ -79,7 +82,7 @@ function CourseViewer(props: CourseViewerProps): JSX.Element {
           className="tag"
           onClick={() => tagToggle('SCI')}
         >
-          {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+          {/* @ts-expect-error ts(2339) */}
           <ion-icon class="hide" name="checkmark-outline" />
           Science
         </button>
@@ -88,7 +91,7 @@ function CourseViewer(props: CourseViewerProps): JSX.Element {
           className="tag"
           onClick={() => tagToggle('BUS')}
         >
-          {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+          {/* @ts-expect-error ts(2339) */}
           <ion-icon class="hide" name="checkmark-outline" />
           Business
         </button>
@@ -97,7 +100,7 @@ function CourseViewer(props: CourseViewerProps): JSX.Element {
           className="tag"
           onClick={() => tagToggle('ART')}
         >
-          {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+          {/* @ts-expect-error ts(2339) */}
           <ion-icon class="hide" name="checkmark-outline" />
           Art
         </button>
@@ -106,7 +109,7 @@ function CourseViewer(props: CourseViewerProps): JSX.Element {
           className="tag"
           onClick={() => tagToggle('IND')}
         >
-          {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+          {/* @ts-expect-error ts(2339) */}
           <ion-icon class="hide" name="checkmark-outline" />
           Trade
         </button>
@@ -115,7 +118,7 @@ function CourseViewer(props: CourseViewerProps): JSX.Element {
           className="tag"
           onClick={() => tagToggle('MUS')}
         >
-          {/* @ts-expect-error Ion Icons with React and TypeScript are not compatible */}
+          {/* @ts-expect-error ts(2339) */}
           <ion-icon class="hide" name="checkmark-outline" />
           Music
         </button>

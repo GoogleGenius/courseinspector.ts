@@ -9,6 +9,7 @@
 
 :root {
   --pull-width: 0px;
+  scroll-behavior: smooth;
 }
 
 @media only screen and (min-width: 400px) {
@@ -493,3 +494,4 @@ button ion-icon {
 .flex-container {
   display: flex;
 }
+
