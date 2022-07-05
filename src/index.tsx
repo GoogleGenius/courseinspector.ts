@@ -41,7 +41,6 @@ firebase
   .auth()
   .getRedirectResult()
   .then((result) => {
-    // The signed-in user info.
     user = result.user;
     RenderDom();
 
@@ -52,7 +51,6 @@ firebase
           return;
         }
 
-        // Authorize the user if the user has been logged in
         authdata = snapshot.val().users;
 
         try {
